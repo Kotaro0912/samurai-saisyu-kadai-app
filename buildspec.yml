@@ -20,6 +20,7 @@ phases:
           --cluster ${ECS_CLUSTER_NAME} \
           --launch-type FARGATE \
           --task-definition ${MIGRATION_TASK_DEFINITION} \
+          --overrides '{"containerOverrides":[{"name":"'"${MIGRATION_CONTAINER_NAME}"'","entryPoint":["sh","-c"],"command":["php artisan migrate --force && php artisan init:db"]}]}' \
           --network-configuration "awsvpcConfiguration={subnets=[${SUBNET_ID_1},${SUBNET_ID_2}],securityGroups=[${SECURITY_GROUP_ID}],assignPublicIp=DISABLED}" \
           --region us-east-1
 
